@@ -13,7 +13,8 @@
     lyrics: <textarea id="lyrics"></textarea><br>
     tags: <input id="tags" type="text" name="tags" value=""><br>
     <input id="generateQrCode" type="button" value="generate QR-Code" /><br>
-    <img id="qr" hidden src="https://qrtag.net/api/qr_4.png?url=https://www.qrtag.net">
+    <a id="myjsonLink" hidden href="#">myjson</a><br>
+    <img id="qr" hidden src="https://qrtag.net/api/qr.png?url=https://www.qrtag.net">
 
 
 
@@ -23,28 +24,26 @@
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
-      // myjson POST Example
-
-      var obj = {
-        "title": $("#title").val(),
-        "artist": $("#artist").val(),
-        "tab": $("#tab").val(),
-        "chords": $("#chords").val(),
-        "lyrics": $("#lyrics").val(),
-        "tags": $("#tags").val(),
-      };
-      var data = JSON.stringify(obj);
-
       $("#generateQrCode").click(function() {
+        var obj = {
+          "title": $("#title").val(),
+          "artist": $("#artist").val(),
+          "tab": $("#tab").val(),
+          "chords": $("#chords").val(),
+          "lyrics": $("#lyrics").val(),
+          "tags": $("#tags").val(),
+        };
+
         $.ajax({
             url: "https://api.myjson.com/bins",
             type: "POST",
-            data: data,
+            data: JSON.stringify(obj),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             success: function (data, textStatus, jqXHR) {
-                var qrSrc = "https://qrtag.net/api/qr_4.png?url=" + data.uri
+                var qrSrc = "https://qrtag.net/api/qr.png?url=" + data.uri
                 $("#qr").attr("src", qrSrc).show()
+                $("#myjsonLink").attr("href", data.uri).show()
             }
         });
       });
