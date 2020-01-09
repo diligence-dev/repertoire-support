@@ -70,7 +70,7 @@
 
       $("#removeBlankLines").click(function() {
         $("textarea").each(function(i, element){
-          var noBlankLines = $(element).val().trim().replace("\n\n", "\n")
+          var noBlankLines = $(element).val().trim().replace(/\n\n/g, "\n")
           $(element).val(noBlankLines)
         })
       })
