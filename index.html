@@ -3,24 +3,44 @@
   <head>
     <meta charset="utf-8">
     <title>Add a Song to Repertoire</title>
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
   </head>
   <body>
-    title: <input id="title" type="text" name="title" value=""><br>
-    artist: <input id="artist" type="text" name="artist" value=""><br>
-    tab: <textarea id="tab"></textarea><br>
-    chords: <textarea id="chords"></textarea><br>
-    lyrics: <textarea id="lyrics"></textarea><br>
-    tags: <input id="tags" type="text" name="tags" value=""><br>
-    <input id="generateQrCode" type="button" value="generate QR-Code" /><br>
-    <a id="myjsonLink" hidden href="#">myjson</a><br>
-    <img id="qr" hidden src="https://qrtag.net/api/qr.png?url=https://www.qrtag.net">
-
-
-
-
-
-
+    <div class="d-flex p-2 justify-content-center">
+      <form style="width: 80%; max-width: 600px" onsubmit="return false">
+        <h2>Add a song to repertoire</h2>
+        <p>Just fill in the form, generate a QR-code and scan it using the repertoire app on your smartphone.</p>
+        <div class="form-group toggle">
+          <label for="title">title</label>
+          <input class="form-control" id="title">
+        </div>
+        <div class="form-group toggle">
+          <label for="artist">artist</label>
+          <input class="form-control" id="artist">
+        </div>
+        <div class="form-group toggle">
+          <label for="tab">tab</label>
+          <textarea class="form-control" id="tab"></textarea>
+        </div>
+        <div class="form-group toggle">
+          <label for="chords">chords</label>
+          <textarea class="form-control" id="chords"></textarea>
+        </div>
+        <div class="form-group toggle">
+          <label for="lyrics">lyrics</label>
+          <textarea class="form-control" id="lyrics"></textarea>
+        </div>
+        <div class="form-group toggle">
+          <label for="tags">tags</label>
+          <input class="form-control" id="tags">
+        </div>
+        <button id="generateQrCode" class="btn btn-primary toggle">generate QR-code</button>
+        <button id="removeBlankLines" class="btn btn-primary toggle">remove blank lines</button>
+        <img id="qr" class="d-none row p-2 toggle" src="https://qrtag.net/api/qr.png?url=https://www.qrtag.net">
+        <button id="newSong" class="d-none btn btn-primary toggle">new song</button>
+      </form>
+    </div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script type="text/javascript">
@@ -32,7 +52,7 @@
           "chords": $("#chords").val(),
           "lyrics": $("#lyrics").val(),
           "tags": $("#tags").val(),
-        };
+        }
 
         $.ajax({
             url: "https://api.myjson.com/bins",
@@ -42,11 +62,22 @@
             dataType: "json",
             success: function (data, textStatus, jqXHR) {
                 var qrSrc = "https://qrtag.net/api/qr.png?url=" + data.uri
-                $("#qr").attr("src", qrSrc).show()
-                $("#myjsonLink").attr("href", data.uri).show()
+                $("#qr").attr("src", qrSrc)
+                $(".toggle").toggleClass("d-none")
             }
-        });
-      });
+        })
+      })
+
+      $("#removeBlankLines").click(function() {
+        $("textarea").each(function(i, element){
+          var noBlankLines = $(element).val().trim().replace("\n\n", "\n")
+          $(element).val(noBlankLines)
+        })
+      })
+
+      $("#newSong").click(function() {
+        $(".toggle").toggleClass("d-none")
+      })
     </script>
   </body>
 </html>
