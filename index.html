@@ -10,7 +10,7 @@
     <div class="d-flex p-2 justify-content-center">
       <form style="width: 80%; max-width: 800px;" onsubmit="return false">
         <h2>Add a song to repertoire</h2>
-        <p>Just fill in the form, generate a QR-code and scan it using the repertoire app on your smartphone.</p>
+        <p>Just fill in the form, generate a QR-code and choose "Scan QR-Code" from the repertoire app's menu on your smartphone.</p>
         <div class="form-group toggle">
           <label for="title">title</label>
           <input class="form-control" id="title">
@@ -19,24 +19,31 @@
           <label for="artist">artist</label>
           <input class="form-control" id="artist">
         </div>
+
         <div class="form-group toggle">
           <label for="tab">tab</label>
           <textarea class="form-control" style="font-family: monospace; white-space: pre;" id="tab"></textarea>
         </div>
+        <button id="removeBlankLinesTab" class="btn btn-primary toggle mb-3">remove blank lines</button>
+
         <div class="form-group toggle">
           <label for="chords">chords</label>
           <textarea class="form-control" style="font-family: monospace; white-space: pre;" id="chords"></textarea>
         </div>
+        <button id="removeBlankLinesChords" class="btn btn-primary toggle mb-3">remove blank lines</button>
+
         <div class="form-group toggle">
           <label for="lyrics">lyrics</label>
           <textarea class="form-control" style="white-space: pre;" id="lyrics"></textarea>
         </div>
+        <button id="removeBlankLinesLyrics" class="btn btn-primary toggle mb-3">remove blank lines</button>
+
         <div class="form-group toggle">
           <label for="tags">tags</label>
           <input class="form-control" id="tags">
         </div>
         <button id="generateQrCode" class="btn btn-primary toggle">generate QR-code</button>
-        <button id="removeBlankLines" class="btn btn-primary toggle">remove blank lines</button>
+
         <img id="qr" class="d-none row p-2 toggle" src="https://qrtag.net/api/qr.png?url=https://www.qrtag.net">
         <button id="newSong" class="d-none btn btn-primary toggle">new song</button>
       </form>
@@ -68,11 +75,19 @@
         })
       })
 
-      $("#removeBlankLines").click(function() {
-        $("textarea").each(function(i, element){
-          var noBlankLines = $(element).val().trim().replace(/\n\n/g, "\n")
-          $(element).val(noBlankLines)
-        })
+      $("#removeBlankLinesTab").click(function() {
+        var noBlankLines = $("#tab").val().trim().replace(/\n\n/g, "\n")
+        $("#tab").val(noBlankLines)
+      })
+
+      $("#removeBlankLinesChords").click(function() {
+        var noBlankLines = $("#chords").val().trim().replace(/\n\n/g, "\n")
+        $("#chords").val(noBlankLines)
+      })
+
+      $("#removeBlankLinesLyrics").click(function() {
+        var noBlankLines = $("#lyrics").val().trim().replace(/\n\n/g, "\n")
+        $("#lyrics").val(noBlankLines)
       })
 
       $("#newSong").click(function() {
