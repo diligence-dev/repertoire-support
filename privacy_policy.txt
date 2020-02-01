@@ -1,0 +1,6 @@
+Privacy Policy for the Android App "Repertoire"
+
+No user data is collected, stored or transferred in any way.
+The camera permission is needed to scan QR-codes, which are used to add songs.
+The internet permission is needed to fetch the song data when a QR-Code is scanned.
+The file system read and write access is needed to import and export the repertoire database.
